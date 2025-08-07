@@ -26,9 +26,13 @@ import com.example.urnodeswidget.util.AuthTokenManager
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import com.example.urnodeswidget.security.JwtManager // Import JwtManager to access keys
+import com.example.urnodeswidget.security.JwtManager
 
-
+/**
+ * MainActivity serves as the primary screen for displaying the UR.network web panel.
+ * It handles authentication logic, loading the web content in a WebView, and ensuring
+ * a seamless, edge-to-edge user interface.
+ */
 class MainActivity : ComponentActivity() {
 
     private var isWebViewReady by mutableStateOf(false)
@@ -51,7 +55,7 @@ class MainActivity : ComponentActivity() {
         window.navigationBarColor = desiredDarkColor
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
-        // Retrieve auth token using the web panel specific key
+        // Use the auth token from the intent if available, otherwise use the stored one.
         val retrievedAuthToken = AuthTokenManager.getAuthToken(this, JwtManager.KEY_WEB_PANEL_AUTH_CODE)
         val authTokenFromIntent = intent.getStringExtra("AUTH_CODE_EXTRA")
 
@@ -74,7 +78,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun redirectToLogin() {
-        // Clear only the web panel's auth token
+        // Clear only the web panel's auth token and redirect to the login screen.
         AuthTokenManager.deleteAuthToken(this, JwtManager.KEY_WEB_PANEL_AUTH_CODE)
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -102,6 +106,7 @@ class MainActivity : ComponentActivity() {
                                         super.onPageStarted(view, url, favicon)
                                         isWebViewReady = false
                                         Log.d("WebViewLoad", "Page started loading: $url")
+                                        // If the webview tries to navigate to its own login page, redirect to our native login.
                                         if (url?.startsWith(webLoginPageUrl, ignoreCase = true) == true) {
                                             Log.i("WebViewBonus", "Web login page detected ($url). Redirecting to app login.")
                                             redirectToLogin()
@@ -109,7 +114,7 @@ class MainActivity : ComponentActivity() {
                                         }
                                     }
 
-                                    override fun onPageFinished(view: WebView?, url: String?) { // Corrected: Removed duplicate 'fun'
+                                    override fun onPageFinished(view: WebView?, url: String?) {
                                         super.onPageFinished(view, url)
                                         Log.d("WebViewLoad", "Page finished loading: $url")
                                         if (!isWebViewReady) { isWebViewReady = true }
@@ -120,6 +125,7 @@ class MainActivity : ComponentActivity() {
                                         val errorMessage = "Code: ${error?.errorCode}, Description: ${error?.description}"
                                         Log.e("WebViewError", "Error: ${request?.url} - $errorMessage")
 
+                                        // If the auth code fails, the user is likely unauthorized. Redirect to login.
                                         val failingUrl = request?.url?.toString() ?: ""
                                         if (failingUrl.contains("?auth_code=$currentLoadedAuthCode")) {
                                             Log.e("WebViewError", "Auth code likely failed for $failingUrl. Redirecting to Login.")
