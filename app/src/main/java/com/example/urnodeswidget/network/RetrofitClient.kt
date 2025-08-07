@@ -4,14 +4,20 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import com.example.urnodeswidget.network.URApiService
-import com.example.urnodeswidget.network.AuthService // Import AuthService
+import com.example.urnodeswidget.network.AuthService
 
+/**
+ * A singleton object that provides configured Retrofit instances for network operations.
+ * It centralizes API service creation for the entire application.
+ */
 object RetrofitClient {
-    // Changed BASE_URL to the correct API domain
     private const val BASE_URL = "https://api.bringyour.com/"
 
     private val client = OkHttpClient.Builder().build()
 
+    /**
+     * Provides a lazily-initialized Retrofit service for general API interactions.
+     */
     val apiService: URApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -21,7 +27,10 @@ object RetrofitClient {
             .create(URApiService::class.java)
     }
 
-    val authService: AuthService by lazy { // Re-added authService
+    /**
+     * Provides a lazily-initialized Retrofit service specifically for authentication tasks.
+     */
+    val authService: AuthService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
