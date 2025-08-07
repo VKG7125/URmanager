@@ -49,6 +49,14 @@ data class WidgetContentState(
     val errorMessage: String? = null
 )
 
+/**
+ * Defines how the state for the [URWidget] is stored and retrieved.
+ *
+ * This custom implementation uses a simple file-based approach with JSON serialization.
+ * It manually reads and writes the [WidgetContentState] to a JSON file in the app's
+ * internal storage. This provides a straightforward state persistence mechanism
+ * for the Glance widget.
+ */
 object WidgetInfoStateDefinition : GlanceStateDefinition<WidgetContentState> {
     private val json = Json { ignoreUnknownKeys = true; prettyPrint = true }
 
@@ -93,18 +101,23 @@ object WidgetInfoStateDefinition : GlanceStateDefinition<WidgetContentState> {
     }
 }
 
+/**
+ * Action callback to handle manual refresh events on the widget.
+ * When triggered (e.g., by a user tap), it fetches the latest usage data.
+ */
 class RefreshWidgetAction : ActionCallback {
     override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
         parameters: androidx.glance.action.ActionParameters
     ) {
+        // Set loading state and update UI
         updateAppWidgetState(context, WidgetInfoStateDefinition, glanceId) { currentState ->
             currentState.copy(isLoading = true, errorMessage = null)
         }
         URWidget().update(context, glanceId)
 
-        // Retrieve auth token using the widget-specific key
+        // Check for auth token before fetching data
         val authToken = AuthTokenManager.getAuthToken(context, JwtManager.KEY_WIDGET_JWT)
         if (authToken.isNullOrBlank()) {
             updateAppWidgetState(context, WidgetInfoStateDefinition, glanceId) {
@@ -132,6 +145,7 @@ class RefreshWidgetAction : ActionCallback {
                 }
             }
         }
+        // Final update to render the new state
         URWidget().update(context, glanceId)
     }
 }
