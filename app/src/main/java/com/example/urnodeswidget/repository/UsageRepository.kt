@@ -5,10 +5,14 @@ import android.util.Log
 import com.example.urnodeswidget.data.TransferStatsResponse
 import com.example.urnodeswidget.network.RetrofitClient
 import com.example.urnodeswidget.util.AuthTokenManager
-import com.example.urnodeswidget.security.JwtManager // Import JwtManager to access keys
+import com.example.urnodeswidget.security.JwtManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Repository for fetching usage data from the URnetwork API.
+ * This acts as a single source of truth for network-related data operations.
+ */
 object UsageRepository {
     private const val TAG = "UsageRepo"
 
