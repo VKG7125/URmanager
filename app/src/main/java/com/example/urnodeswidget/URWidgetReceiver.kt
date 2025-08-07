@@ -14,26 +14,27 @@ import kotlinx.coroutines.launch
 class URWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = URWidget()
 
-    // Override onUpdate to trigger data fetch when the widget is updated by the system
-    // This is primarily for initial setup or system-triggered updates.
-    // Periodic updates are now handled by WorkManager.
+    /**
+     * Called by the system to update the widget.
+     * Periodic updates are handled by a scheduled WorkManager job. This onUpdate callback
+     * is primarily for the initial widget placement. The actual data fetching and UI
+     * updates are triggered from the widget's configuration activity (`WidgetLoginActivity`).
+     */
     override fun onUpdate(
         context: Context,
         appWidgetManager: android.appwidget.AppWidgetManager,
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        // For each widget instance, trigger an immediate refresh action.
-        // Periodic updates will be handled by WorkManager, scheduled in WidgetConfigActivity.
-        appWidgetIds.forEach { appWidgetId ->
-            CoroutineScope(Dispatchers.IO).launch {
-                val glanceId = GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
-                // The initial update is now handled by WidgetLoginActivity, and periodic updates by WorkManager.
-                // No need to manually trigger RefreshWidgetAction here.
-            }
-        }
+        // The main logic for widget updates (both initial and periodic) is handled
+        // by WorkManager, which is scheduled in WidgetLoginActivity.
+        // This method is intentionally left with minimal logic to avoid duplicate work.
     }
 
+    /**
+     * Called when a widget instance is deleted from the host.
+     * This cancels any scheduled background work associated with that specific widget instance.
+     */
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
         appWidgetIds.forEach { appWidgetId ->
