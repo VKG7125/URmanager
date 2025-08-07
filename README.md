@@ -5,7 +5,7 @@
 **URmanager** is an Android app that includes the URNetwork client manager (WebView) and a homescreen widget to monitor your provided URNetwork data.
 
 ### Features
-- URNetwork client manager in WebView for managing your URNetwork clients
+- URnetwork client manager in WebView for managing your URNetwork clients
 - Homescreen widget displaying **unpaid data usage**
 - Clean, blue, dark theme UI to match the URNetwork client manager website
 
