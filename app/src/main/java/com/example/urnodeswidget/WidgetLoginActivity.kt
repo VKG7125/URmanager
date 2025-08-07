@@ -31,12 +31,18 @@ import androidx.work.OneTimeWorkRequestBuilder
 import com.example.urnodeswidget.ui.theme.URnodesWidgetTheme
 import com.example.urnodeswidget.util.AuthTokenManager
 import com.example.urnodeswidget.network.RetrofitClient
-import com.example.urnodeswidget.security.JwtManager // Import JwtManager to access keys
+import com.example.urnodeswidget.security.JwtManager
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 import com.example.urnodeswidget.worker.UsageUpdateWorker
 
+/**
+ * Configuration activity for the home screen widget.
+ * This screen allows the user to enter their auth code and set a refresh interval.
+ * Upon successful setup, it saves a widget-specific JWT, schedules a periodic
+ * background worker for updates, and finishes.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 class WidgetLoginActivity : ComponentActivity() {
 
@@ -200,7 +206,7 @@ class WidgetLoginActivity : ComponentActivity() {
                                         if (response.isSuccessful) {
                                             val jwtToken = response.body()?.token
                                             if (!jwtToken.isNullOrBlank()) {
-                                                // Save the JWT token using the widget-specific key
+                                                // Save the JWT specifically for widget use.
                                                 AuthTokenManager.saveAuthToken(context, jwtToken, JwtManager.KEY_WIDGET_JWT)
                                                 Log.i(tag, "JWT token saved for appWidgetId: $appWidgetId.")
 
@@ -208,8 +214,9 @@ class WidgetLoginActivity : ComponentActivity() {
                                                     .putInt(UsageUpdateWorker.APP_WIDGET_ID_KEY, appWidgetId)
                                                     .build()
 
+                                                // Schedule the periodic background task to update the widget.
                                                 val workTag = "widget_update_$appWidgetId"
-                                                WorkManager.getInstance(context).cancelAllWorkByTag(workTag)
+                                                WorkManager.getInstance(context).cancelAllWorkByTag(workTag) // Cancel any old work.
                                                 Log.d(tag, "Cancelled existing work for tag: $workTag")
 
                                                 val refreshMinutes = selectedInterval.second
@@ -222,11 +229,12 @@ class WidgetLoginActivity : ComponentActivity() {
 
                                                 WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                                                     workTag,
-                                                    ExistingPeriodicWorkPolicy.UPDATE,
+                                                    ExistingPeriodicWorkPolicy.UPDATE, // Replace existing work.
                                                     usageUpdateWorkRequest
                                                 )
                                                 Log.d(tag, "Scheduled periodic work for appWidgetId: $appWidgetId with interval: $refreshMinutes minutes")
 
+                                                // Enqueue an immediate update to show data right away.
                                                 val immediateWorkRequest = OneTimeWorkRequestBuilder<UsageUpdateWorker>()
                                                     .addTag(workTag)
                                                     .setInputData(inputData)
