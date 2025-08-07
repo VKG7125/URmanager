@@ -1,7 +1,7 @@
 package com.example.urnodeswidget.worker
 
 import android.content.Context
-import android.appwidget.AppWidgetManager // Import AppWidgetManager
+import android.appwidget.AppWidgetManager
 import android.util.Log
 import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidgetManager
@@ -13,8 +13,13 @@ import com.example.urnodeswidget.WidgetInfoStateDefinition
 import com.example.urnodeswidget.repository.UsageRepository
 import com.example.urnodeswidget.WidgetContentState
 import com.example.urnodeswidget.util.AuthTokenManager
-import com.example.urnodeswidget.security.JwtManager // Import JwtManager to access keys
+import com.example.urnodeswidget.security.JwtManager
 
+/**
+ * A CoroutineWorker responsible for fetching updated usage statistics in the background.
+ * This worker is scheduled periodically to keep the widget data fresh without
+ * impacting the main application's performance.
+ */
 class UsageUpdateWorker(
     private val context: Context,
     workerParams: WorkerParameters
@@ -26,8 +31,8 @@ class UsageUpdateWorker(
     }
 
     override suspend fun doWork(): Result {
-        val appWidgetId = inputData.getInt(APP_WIDGET_ID_KEY, AppWidgetManager.INVALID_APPWIDGET_ID) // Corrected: Removed underscore
-        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) { // Corrected: Removed underscore
+        val appWidgetId = inputData.getInt(APP_WIDGET_ID_KEY, AppWidgetManager.INVALID_APPWIDGET_ID)
+        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             Log.e(TAG, "No valid appWidgetId provided to worker.")
             return Result.failure()
         }
