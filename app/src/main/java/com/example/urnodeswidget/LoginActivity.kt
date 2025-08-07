@@ -28,6 +28,12 @@ import com.example.urnodeswidget.ui.theme.URnodesWidgetTheme
 import com.example.urnodeswidget.util.AuthTokenManager
 import com.example.urnodeswidget.security.JwtManager
 
+/**
+ * Handles the user login process for the main web panel.
+ * It provides a UI for entering an auth code, saves it securely, and navigates
+ * to the MainActivity upon successful login. It also handles the splash screen
+ * and checks for existing login sessions.
+ */
 class LoginActivity : ComponentActivity() {
 
     private val TAG = "LoginActivity"
@@ -38,7 +44,7 @@ class LoginActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        // Replicating the window setup from MainActivity for consistency
+        // Configure window for edge-to-edge display.
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.setBackgroundDrawable(0xFF131829.toInt().toDrawable())
 
@@ -48,7 +54,7 @@ class LoginActivity : ComponentActivity() {
         window.navigationBarColor = desiredDarkColor
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
-        // Check if user is already logged in using AuthTokenManager with the web panel key
+        // Check if user is already logged in.
         val authToken = AuthTokenManager.getAuthToken(this, JwtManager.KEY_WEB_PANEL_AUTH_CODE)
         val isLoggedIn = !authToken.isNullOrBlank()
 
@@ -140,7 +146,7 @@ class LoginActivity : ComponentActivity() {
                                 isLoading = true
                                 Log.d(TAG, "Auth Code input length: ${longAuthCodeInput.length}")
 
-                                // Directly save the provided auth code using the web panel key
+                                // Save the provided auth code for the web panel.
                                 val isSaved = AuthTokenManager.saveAuthToken(context, longAuthCodeInput, JwtManager.KEY_WEB_PANEL_AUTH_CODE)
                                 if (isSaved) {
                                     Log.i(TAG, "Auth code saved securely for web panel.")
