@@ -8,4 +8,4 @@ An Android application with both the URnetwork client manager webpanel in WebVie
 
 ---
 
-[Download Current Version](https://github.com/VKG7125/URmanager/raw/refs/heads/main/URmanager-beta_release.apk)
+[Download Current Version](https://github.com/VKG7125/URmanager/raw/refs/heads/main/URmanager.apk)
