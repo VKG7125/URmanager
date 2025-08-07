@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/VKG7125/URmanager/refs/heads/main/supercoolprojectbanner1.png?token=GHSAT0AAAAAADHLYMJY2KDLAJ7SY4W3QZXS2EUB5DQ" alt="Social Preview" height="100"/>
+<img src="https://raw.githubusercontent.com/VKG7125/URmanager/refs/heads/main/superCoolbanner.png" alt="Social Preview" height="110"/>
 
 ---
 
