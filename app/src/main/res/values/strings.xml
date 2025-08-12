@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">URmanager</string>
+
+    <!-- General -->
+    <string name="auth_code">Auth Code</string>
+    <string name="cancel">Cancel</string>
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="login_required">Login required</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="failed_to_load_data">Failed to load data</string>
+
+    <!-- LoginActivity -->
+    <string name="webpanel_login">Webpanel Login</string>
+    <string name="webpanel_login_prompt">Enter your auth code to login into webpanel</string>
+    <string name="login">Login</string>
+    <string name="prompt_enter_auth_code">Please enter the auth code</string>
+    <string name="auth_code_too_short">Auth code seems too short</string>
+    <string name="failed_to_save_auth_code">Failed to save auth code.</string>
+
+    <!-- WidgetLoginActivity -->
+    <string name="widget_setup">Widget Setup</string>
+    <string name="widget_setup_prompt">Enter your auth code and select refresh rate</string>
+    <string name="refresh_interval">Refresh Interval</string>
+    <string name="setup_widget">Setup Widget</string>
+    <string name="setup_failed_no_token">Setup failed: No token received</string>
+    <string name="setup_failed_with_error">Setup failed: %1$s - %2$s</string>
+    <string name="network_error">Network error: %1$s</string>
+    <string name="unexpected_error">An unexpected error occurred: %1$s</string>
+    <string name="interval_15_min">15 minutes</string>
+    <string name="interval_30_min">30 minutes</string>
+    <string name="interval_1_hour">1 hour</string>
+    <string name="interval_2_hours">2 hours</string>
+    <string name="interval_4_hours">4 hours</string>
+    <string name="interval_6_hours">6 hours</string>
+    <string name="interval_12_hours">12 hours</string>
+    <string name="interval_24_hours">24 hours</string>
+
+    <!-- URWidget -->
+    <string name="unpaid_provided">Unpaid Provided:</string>
+    <string name="tap_to_refresh">Tap to refresh</string>
+
+</resources>

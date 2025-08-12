@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.URnodesWidget">
+
+        <!-- 1️⃣ Main launcher activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- 2️⃣ Main dashboard / WebView -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.URnodesWidget" />
+
+        <!-- 3️⃣ Widget login screen -->
+        <activity
+            android:name=".WidgetLoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.URnodesWidget" />
+
+        <!-- 4️⃣ Widget receiver definition -->
+        <receiver
+            android:name=".URWidgetReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ur_widget_info"/>
+        </receiver>
+
+        <activity
+            android:name=".WidgetConfigActivity"
+            android:exported="false"
+            android:theme="@style/Theme.URnodesWidget" />
+
+    </application>
+</manifest>

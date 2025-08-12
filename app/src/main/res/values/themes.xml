@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 1. Your Main Application Theme -->
+    <style name="Theme.URnodesWidget" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Explicitly disable the window title -->
+        <item name="android:windowNoTitle">true</item> <!-- << ADD THIS -->
+
+        <!-- System Bar Colors -->
+        <item name="android:statusBarColor">@color/dark_blue_grey</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:navigationBarColor">@color/dark_blue_grey</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+    </style>
+
+    <!-- 2. Splash Screen Theme (for Android 12+ and androidx.core:core-splashscreen) -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background -->
+
+        <item name="windowSplashScreenBackground">#131928</item> <!-- This is already correct -->
+
+        <!-- Set the icon to display. You can use your app's launcher icon -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <!-- You can also use a drawable for more complex icons or animations: -->
+        <!-- <item name="windowSplashScreenAnimatedIcon">@drawable/your_splash_icon_drawable</item> -->
+
+        <!-- Optional: Duration of the icon animation. Defaults to 1000ms. -->
+        <!-- <item name="windowSplashScreenAnimationDuration">1000</item> -->
+
+        <!-- Set the theme of the Activity that follows your splash screen. -->
+        <!-- This should be your main app theme. -->
+        <item name="postSplashScreenTheme">@style/Theme.URnodesWidget</item>
+    </style>
+
+    <!-- You can probably remove this old "Theme.Splash" if you're fully adopting Theme.App.Starting -->
+    <!--
+    <style name="Theme.Splash" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:background">#000200</item>
+    </style>
+    -->
+
+</resources>
