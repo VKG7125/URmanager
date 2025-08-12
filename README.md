@@ -9,7 +9,7 @@
 - Homescreen widget displaying **unpaid provided data**
 - Clean, blue, and dark themed UI to match the URnetwork client manager website
 
-📦 [Download APK](https://github.com/VKG7125/URmanager/releases/download/v1.0.0/URmanager.apk)
+📦 [Download APK](https://github.com/VKG7125/URmanager/releases/download/v1.0/URmanager.apk)
 
 ---
 
