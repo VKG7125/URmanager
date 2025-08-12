@@ -1,0 +1,6 @@
+An Android application that provides a web panel for the URnetwork client manager and a home screen widget for monitoring your provided data.
+
+The app features:
+* A full web panel experience via a secure WebView.
+* A home screen widget to see your unpaid data at a glance.
+* Secure, on-device storage for your authentication credentials.

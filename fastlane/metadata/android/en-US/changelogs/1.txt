@@ -1,0 +1,6 @@
+Initial release of URmanager!
+
+* Manage your URnetwork clients from within the app.
+* Monitor your unpaid provided data with a home screen widget.
+* Securely stores your credentials on your device.
+* Clean, dark-themed UI.

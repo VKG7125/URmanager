@@ -1,0 +1,1 @@
+An Android app and widget for managing your URnetwork clients.
